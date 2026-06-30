@@ -40,6 +40,20 @@
   }
   .ident a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
+  .print-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--mute);
+    font: inherit;
+    padding: 2px 8px;
+    margin-top: 0.75rem;
+    cursor: pointer;
+    transition: color 0.12s ease, border-color 0.12s ease;
+  }
+  .print-btn:hover { color: var(--accent); border-color: var(--accent); }
+  @media print { .print-btn { display: none; } }
+
   section { margin-top: 2.5rem; }
   h2 {
     font-size: inherit;
@@ -105,6 +119,7 @@
       <a href="mailto:machacekmartin@icloud.com" target="_blank" rel="noopener noreferrer">machacekmartin@icloud.com</a><br>
       <a href="https://github.com/machacekmartin" target="_blank" rel="noopener noreferrer">gh/machacekmartin</a>
     </p>
+    <button class="print-btn" onclick="window.print()">$ print</button>
   </header>
 
   <section>
