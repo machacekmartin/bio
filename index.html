@@ -41,13 +41,15 @@
   .ident a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
   .print-btn {
-    background: none;
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    background: var(--bg);
     border: 1px solid var(--rule);
     border-radius: 3px;
     color: var(--mute);
     font: inherit;
-    padding: 2px 8px;
-    margin-top: 0.75rem;
+    padding: 4px 10px;
     cursor: pointer;
     transition: color 0.12s ease, border-color 0.12s ease;
   }
@@ -119,7 +121,6 @@
       <a href="mailto:machacekmartin@icloud.com" target="_blank" rel="noopener noreferrer">machacekmartin@icloud.com</a><br>
       <a href="https://github.com/machacekmartin" target="_blank" rel="noopener noreferrer">gh/machacekmartin</a>
     </p>
-    <button class="print-btn" onclick="window.print()">$ print</button>
   </header>
 
   <section>
@@ -208,5 +209,6 @@
 
   <p class="end"><span class="prompt">~</span> <span class="mute">$</span> <span class="blink">_</span></p>
 </main>
+<button class="print-btn" onclick="window.print()">$ print</button>
 </body>
 </html>
