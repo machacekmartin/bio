@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>martin machacek - fullstack dev</title>
+<style>
+  :root {
+    --bg: #0d0d0c;
+    --ink: #d4d4cf;
+    --mute: #6a6a64;
+    --accent: #8fb96b;
+    --rule: #1f1f1c;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #fafaf6; --ink: #1a1a17; --mute: #76746d; --accent: #4d7a2e; --rule: #e6e3dc; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 13.5px/1.65 ui-monospace, "SF Mono", "JetBrains Mono", "Geist Mono", Menlo, Consolas, monospace;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+  a { color: inherit; }
+  .prompt { color: var(--accent); }
+  .mute { color: var(--mute); }
+
+  header { margin-bottom: 2.75rem; }
+  h1 { font-size: inherit; font-weight: 400; margin: 0; }
+  .ident { margin: 0.75rem 0 0; line-height: 1.7; }
+  .ident a {
+    text-decoration: none;
+    border-bottom: 1px dotted var(--mute);
+  }
+  .ident a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  section { margin-top: 2.5rem; }
+  h2 {
+    font-size: inherit;
+    font-weight: 400;
+    margin: 0 0 1rem;
+    color: var(--accent);
+  }
+  h2::before { content: "# "; color: var(--mute); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.25rem;
+    padding: 0.375rem 0;
+  }
+  .row .date { color: var(--mute); }
+  .row .role { margin: 0; }
+  .row .sub { color: var(--mute); margin: 0; }
+
+  .tags { line-height: 2.1; }
+  .stack-groups { display: grid; gap: 0.75rem; }
+  .tag {
+    display: inline-block;
+    padding: 1px 7px;
+    margin: 0 4px 0 0;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    color: var(--mute);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.12s ease, border-color 0.12s ease;
+  }
+  a.tag:hover { color: var(--accent); border-color: var(--accent); }
+
+  .project { padding: 0.85rem 0; border-top: 1px dashed var(--rule); }
+  .project:first-of-type { border-top: 0; padding-top: 0.25rem; }
+  .project h3 { font-size: inherit; font-weight: 400; margin: 0; }
+  .project h3::before { content: "> "; color: var(--accent); }
+  .project h3 a {
+    text-decoration: none;
+    border-bottom: 1px dotted var(--mute);
+  }
+  .project p { color: var(--mute); margin: 0.25rem 0 0; }
+
+  .end {
+    margin-top: 3rem;
+    color: var(--mute);
+  }
+  .end .blink { color: var(--accent); }
+
+  @media (max-width: 640px) {
+    main { padding: 3rem 1.25rem; }
+    .row { grid-template-columns: 1fr; gap: 0.125rem; padding: 0.5rem 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1><span class="prompt">~</span> <span class="mute">$</span> whoami</h1>
+    <p class="ident">
+      Martin Macháček, fullstack dev, brno, cz<br>
+      <a href="mailto:machacekmartin@icloud.com" target="_blank" rel="noopener noreferrer">machacekmartin@icloud.com</a><br>
+      <a href="https://github.com/machacekmartin" target="_blank" rel="noopener noreferrer">gh/machacekmartin</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>about</h2>
+    <p class="mute" style="margin:0; max-width:60ch;">~7 yrs fullstack. laravel + TALL stack day to day. spare time goes to automations, qol improvements, and oddly specific side projects. currently learning native apps with swift and focusing on ai-driven development.</p>
+  </section>
+
+  <section>
+    <h2>work</h2>
+    <div class="row">
+      <span class="date">2023..now</span>
+      <span>
+        <p class="role">fullstack developer · Freelance</p>
+        <p class="sub">Snadnee, Senseius, Horizont Development, Global Logistics</p>
+        <p class="sub">laravel, livewire, inertia, filament, tailwind, alpine, vue, react, three.js, and much much more</p>
+      </span>
+    </div>
+    <div class="row">
+      <span class="date">2021..2023</span>
+      <span><p class="role">web app developer · Legal Systems</p><p class="sub">laravel, livewire, filament, tailwind, vue</p></span>
+    </div>
+    <div class="row">
+      <span class="date">2020..2021</span>
+      <span><p class="role">frontend developer · Bluesoft</p><p class="sub">c#, kentico, scss</p></span>
+    </div>
+    <div class="row">
+      <span class="date">2018</span>
+      <span><p class="role">angular developer · Firmo</p><p class="sub">angular, css</p></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>stack</h2>
+    <div class="stack-groups">
+      <div class="tags">
+        <a class="tag" href="https://laravel.com" target="_blank" rel="noopener noreferrer">laravel</a><a class="tag" href="https://livewire.laravel.com" target="_blank" rel="noopener noreferrer">livewire</a><a class="tag" href="https://inertiajs.com" target="_blank" rel="noopener noreferrer">inertia</a><a class="tag" href="https://filamentphp.com" target="_blank" rel="noopener noreferrer">filament</a><a class="tag" href="https://alpinejs.dev" target="_blank" rel="noopener noreferrer">alpine</a><a class="tag" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">tailwind</a><a class="tag" href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">typescript</a><a class="tag" href="https://react.dev" target="_blank" rel="noopener noreferrer">react</a><a class="tag" href="https://vuejs.org" target="_blank" rel="noopener noreferrer">vue</a><a class="tag" href="https://svelte.dev" target="_blank" rel="noopener noreferrer">svelte</a><a class="tag" href="https://threejs.org" target="_blank" rel="noopener noreferrer">three.js</a><a class="tag" href="https://www.swift.org" target="_blank" rel="noopener noreferrer">swift</a>
+      </div>
+      <div class="tags">
+        <a class="tag" href="https://www.mysql.com" target="_blank" rel="noopener noreferrer">mysql</a><a class="tag" href="https://www.postgresql.org" target="_blank" rel="noopener noreferrer">postgres</a><a class="tag" href="https://redis.io" target="_blank" rel="noopener noreferrer">redis</a><a class="tag" href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer">aws</a><a class="tag" href="https://cloud.laravel.com" target="_blank" rel="noopener noreferrer">laravel cloud</a><a class="tag" href="https://vapor.laravel.com" target="_blank" rel="noopener noreferrer">vapor</a><a class="tag" href="https://forge.laravel.com" target="_blank" rel="noopener noreferrer">forge</a><a class="tag" href="https://github.com" target="_blank" rel="noopener noreferrer">github</a><a class="tag" href="https://github.com/features/actions" target="_blank" rel="noopener noreferrer">gh actions</a><a class="tag" href="https://herd.laravel.com" target="_blank" rel="noopener noreferrer">herd</a><a class="tag" href="https://github.com/larastan/larastan" target="_blank" rel="noopener noreferrer">larastan</a><a class="tag" href="https://github.com/tighten/duster" target="_blank" rel="noopener noreferrer">duster</a><a class="tag" href="https://pestphp.com" target="_blank" rel="noopener noreferrer">pest</a><a class="tag" href="https://phpunit.de" target="_blank" rel="noopener noreferrer">phpunit</a>
+      </div>
+      <div class="tags">
+        <a class="tag" href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">mcps</a><a class="tag" href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">claude code</a><a class="tag" href="https://cursor.com" target="_blank" rel="noopener noreferrer">cursor</a><a class="tag" href="https://super.engineering" target="_blank" rel="noopener noreferrer">superconductor</a>
+      </div>
+      <div class="tags">
+        <span class="tag">czech</span><span class="tag">english</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>side</h2>
+    <div class="project">
+      <h3><a href="https://notdown.dev" target="_blank" rel="noopener noreferrer">notdown.dev</a></h3>
+      <p>ai-first monitoring tool for apps and processes.</p>
+    </div>
+    <div class="project">
+      <h3><a href="https://machacekmartin.github.io/dxf-viewer/" target="_blank" rel="noopener noreferrer">dxf viewer</a></h3>
+      <p>macos app to browse dxf files and their layers, performant ux.</p>
+    </div>
+    <div class="project">
+      <h3>ser tam plyn</h3>
+      <p>ios app for motorcycle riders. shared rides, stats, leaderboards, nfs-style multiplayer live map.</p>
+    </div>
+    <div class="project">
+      <h3><a href="https://github.com/machacekmartin/twingo-notifier" target="_blank" rel="noopener noreferrer">twingo notifier</a></h3>
+      <p>scraper for a first-gen renault twingo. bought one thanks to it.</p>
+    </div>
+    <div class="project">
+      <h3><a href="https://github.com/machacekmartin/multipi" target="_blank" rel="noopener noreferrer">multipi</a></h3>
+      <p>dualbooting tv and retro gaming oses onto a raspberry pi 5 without keyboard or mouse to switch between them.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>fun</h2>
+    <p class="mute" style="margin:0; max-width:60ch;">motorcycles, swimming, 3d printing, 3d modeling, kodi plugins and skins, home automations, raspi qol, side quest maxxing.</p>
+  </section>
+
+  <section>
+    <h2>edu</h2>
+    <div class="row">
+      <span class="date">2021</span>
+      <span>VUT FIT Brno, bachelor's</span>
+    </div>
+  </section>
+
+  <p class="end"><span class="prompt">~</span> <span class="mute">$</span> <span class="blink">_</span></p>
+</main>
+</body>
+</html>
