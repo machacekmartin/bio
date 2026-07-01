@@ -4,17 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>martin machacek - fullstack dev</title>
+<script>document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';</script>
 <style>
   :root {
-    --bg: #0d0d0c;
+    --bg: #050504;
     --ink: #d4d4cf;
     --mute: #6a6a64;
     --accent: #8fb96b;
     --rule: #1f1f1c;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #fafaf6; --ink: #1a1a17; --mute: #76746d; --accent: #4d7a2e; --rule: #e6e3dc; }
+    :root {
+      --bg: oklch(99% 0.004 110);
+      --ink: oklch(22% 0.008 110);
+      --mute: oklch(50% 0.012 105);
+      --accent: oklch(46% 0.13 135);
+      --rule: oklch(91% 0.007 110);
+    }
   }
+  :root[data-theme="light"] {
+    --bg: oklch(99% 0.004 110);
+    --ink: oklch(22% 0.008 110);
+    --mute: oklch(50% 0.012 105);
+    --accent: oklch(46% 0.13 135);
+    --rule: oklch(91% 0.007 110);
+  }
+  :root[data-theme="dark"] { --bg: #050504; --ink: #d4d4cf; --mute: #6a6a64; --accent: #8fb96b; --rule: #1f1f1c; }
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -27,18 +42,17 @@
     margin: 0 auto;
     padding: 4rem 1.5rem 5rem;
   }
-  a { color: inherit; }
+  a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--mute); }
+  a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+  a.tag { border-bottom: 1px solid var(--rule); }
+  a.tag:hover { border-bottom-color: var(--accent); }
   .prompt { color: var(--accent); }
   .mute { color: var(--mute); }
 
   header { margin-bottom: 2.75rem; }
+  .head-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
   h1 { font-size: inherit; font-weight: 400; margin: 0; }
   .ident { margin: 0.75rem 0 0; line-height: 1.7; }
-  .ident a {
-    text-decoration: none;
-    border-bottom: 1px dotted var(--mute);
-  }
-  .ident a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
   .end { display: flex; justify-content: space-between; align-items: center; }
   .print-btn {
@@ -49,10 +63,32 @@
     font: inherit;
     padding: 2px 8px;
     cursor: pointer;
-    transition: color 0.12s ease, border-color 0.12s ease;
   }
   .print-btn:hover { color: var(--accent); border-color: var(--accent); }
-  @media print { .print-btn { display: none; } }
+  @media print {
+    :root, :root[data-theme="dark"] {
+      --bg: #fff;
+      --ink: #111;
+      --mute: #555;
+      --accent: #2a5a1a;
+      --rule: #ccc;
+    }
+    @page { size: A4; margin: 10mm 12mm; }
+    body { font-size: 8.5pt; line-height: 1.35; }
+    main { max-width: none; padding: 0; }
+    header { margin-bottom: 0.6rem; }
+    .ident { margin-top: 0.25rem; line-height: 1.4; }
+    section { margin-top: 0.65rem; }
+    h2 { margin-bottom: 0.25rem; }
+    .row { padding: 0.1rem 0; grid-template-columns: 90px 1fr; gap: 0.75rem; }
+    .row .sub, .project p { margin-top: 0.05rem; }
+    .project { padding: 0.3rem 0; }
+    .stack-groups { gap: 0.3rem; }
+    .tags { gap: 3px; }
+    .end { margin-top: 0.8rem; }
+    .print-btn, .blink { display: none; }
+    a { color: inherit; text-decoration: none; }
+  }
 
   section { margin-top: 2.5rem; }
   h2 {
@@ -72,21 +108,16 @@
   .row .date { color: var(--mute); }
   .row .role { margin: 0; }
   .row .sub { color: var(--mute); margin: 0; }
-  .row a { text-decoration: none; border-bottom: 1px dotted var(--mute); }
-  .row a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-  .tags { line-height: 2.1; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
   .stack-groups { display: grid; gap: 0.75rem; }
   .tag {
     display: inline-block;
-    padding: 1px 7px;
-    margin: 0 4px 0 0;
+    padding: 0 5px;
     border: 1px solid var(--rule);
     border-radius: 3px;
     color: var(--mute);
     white-space: nowrap;
-    text-decoration: none;
-    transition: color 0.12s ease, border-color 0.12s ease;
   }
   a.tag:hover { color: var(--accent); border-color: var(--accent); }
 
@@ -94,10 +125,6 @@
   .project:first-of-type { border-top: 0; padding-top: 0.25rem; }
   .project h3 { font-size: inherit; font-weight: 400; margin: 0; }
   .project h3::before { content: "> "; color: var(--accent); }
-  .project h3 a {
-    text-decoration: none;
-    border-bottom: 1px dotted var(--mute);
-  }
   .project p { color: var(--mute); margin: 0.25rem 0 0; }
 
   .end {
@@ -115,7 +142,10 @@
 <body>
 <main>
   <header>
-    <h1><span class="prompt">~</span> <span class="mute">$</span> whoami</h1>
+    <div class="head-row">
+      <h1><span class="prompt">~</span> <span class="mute">$</span> whoami</h1>
+      <span style="white-space:nowrap"><button class="print-btn" onclick="toggleTheme()">$ theme</button> <button class="print-btn" onclick="window.print()">$ print</button></span>
+    </div>
     <p class="ident">
       martin macháček, fullstack dev, brno, cz<br>
       <a href="mailto:machacekmartin@icloud.com" target="_blank" rel="noopener noreferrer">machacekmartin@icloud.com</a><br>
@@ -125,7 +155,7 @@
 
   <section>
     <h2>about</h2>
-    <p class="mute" style="margin:0; max-width:60ch;">~7 yrs fullstack. laravel + tall stack day to day. spare time goes to automations, qol improvements, and oddly specific side projects. currently learning native apps with swift and focusing on ai-driven development.</p>
+    <p class="mute" style="margin:0; max-width:60ch;">~7 yrs fullstack. laravel + tall stack day to day. spare time goes to automations and oddly specific side projects. currently building native apps with swift and focusing on ai-driven development.</p>
   </section>
 
   <section>
@@ -156,16 +186,13 @@
     <h2>stack</h2>
     <div class="stack-groups">
       <div class="tags">
-        <a class="tag" href="https://laravel.com" target="_blank" rel="noopener noreferrer">laravel</a><a class="tag" href="https://livewire.laravel.com" target="_blank" rel="noopener noreferrer">livewire</a><a class="tag" href="https://inertiajs.com" target="_blank" rel="noopener noreferrer">inertia</a><a class="tag" href="https://filamentphp.com" target="_blank" rel="noopener noreferrer">filament</a><a class="tag" href="https://alpinejs.dev" target="_blank" rel="noopener noreferrer">alpine</a><a class="tag" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">tailwind</a><a class="tag" href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">typescript</a><a class="tag" href="https://react.dev" target="_blank" rel="noopener noreferrer">react</a><a class="tag" href="https://vuejs.org" target="_blank" rel="noopener noreferrer">vue</a><a class="tag" href="https://svelte.dev" target="_blank" rel="noopener noreferrer">svelte</a><a class="tag" href="https://threejs.org" target="_blank" rel="noopener noreferrer">three.js</a><a class="tag" href="https://www.swift.org" target="_blank" rel="noopener noreferrer">swift</a>
+        <a class="tag" href="https://laravel.com" target="_blank" rel="noopener noreferrer">laravel</a><a class="tag" href="https://livewire.laravel.com" target="_blank" rel="noopener noreferrer">livewire</a><a class="tag" href="https://filamentphp.com" target="_blank" rel="noopener noreferrer">filament</a><a class="tag" href="https://alpinejs.dev" target="_blank" rel="noopener noreferrer">alpine</a><a class="tag" href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer">tailwind</a><a class="tag" href="https://inertiajs.com" target="_blank" rel="noopener noreferrer">inertia</a><a class="tag" href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer">typescript</a><a class="tag" href="https://threejs.org" target="_blank" rel="noopener noreferrer">three.js</a><a class="tag" href="https://react.dev" target="_blank" rel="noopener noreferrer">react</a><a class="tag" href="https://vuejs.org" target="_blank" rel="noopener noreferrer">vue</a><a class="tag" href="https://svelte.dev" target="_blank" rel="noopener noreferrer">svelte</a><a class="tag" href="https://www.swift.org" target="_blank" rel="noopener noreferrer">swift</a>
       </div>
       <div class="tags">
-        <a class="tag" href="https://www.mysql.com" target="_blank" rel="noopener noreferrer">mysql</a><a class="tag" href="https://www.postgresql.org" target="_blank" rel="noopener noreferrer">postgres</a><a class="tag" href="https://redis.io" target="_blank" rel="noopener noreferrer">redis</a><a class="tag" href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer">aws</a><a class="tag" href="https://cloud.laravel.com" target="_blank" rel="noopener noreferrer">laravel cloud</a><a class="tag" href="https://vapor.laravel.com" target="_blank" rel="noopener noreferrer">vapor</a><a class="tag" href="https://forge.laravel.com" target="_blank" rel="noopener noreferrer">forge</a><a class="tag" href="https://github.com" target="_blank" rel="noopener noreferrer">github</a><a class="tag" href="https://github.com/features/actions" target="_blank" rel="noopener noreferrer">gh actions</a><a class="tag" href="https://herd.laravel.com" target="_blank" rel="noopener noreferrer">herd</a><a class="tag" href="https://github.com/larastan/larastan" target="_blank" rel="noopener noreferrer">larastan</a><a class="tag" href="https://github.com/tighten/duster" target="_blank" rel="noopener noreferrer">duster</a><a class="tag" href="https://pestphp.com" target="_blank" rel="noopener noreferrer">pest</a><a class="tag" href="https://phpunit.de" target="_blank" rel="noopener noreferrer">phpunit</a>
+        <a class="tag" href="https://www.mysql.com" target="_blank" rel="noopener noreferrer">mysql</a><a class="tag" href="https://www.postgresql.org" target="_blank" rel="noopener noreferrer">postgresql</a><a class="tag" href="https://redis.io" target="_blank" rel="noopener noreferrer">redis</a><a class="tag" href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer">aws</a><a class="tag" href="https://cloud.laravel.com" target="_blank" rel="noopener noreferrer">cloud</a><a class="tag" href="https://vapor.laravel.com" target="_blank" rel="noopener noreferrer">vapor</a><a class="tag" href="https://forge.laravel.com" target="_blank" rel="noopener noreferrer">forge</a><a class="tag" href="https://github.com" target="_blank" rel="noopener noreferrer">github</a><a class="tag" href="https://github.com/features/actions" target="_blank" rel="noopener noreferrer">cicd actions</a><a class="tag" href="https://herd.laravel.com" target="_blank" rel="noopener noreferrer">herd</a><a class="tag" href="https://github.com/larastan/larastan" target="_blank" rel="noopener noreferrer">larastan</a><a class="tag" href="https://github.com/tighten/duster" target="_blank" rel="noopener noreferrer">duster</a><a class="tag" href="https://pestphp.com" target="_blank" rel="noopener noreferrer">pest</a><a class="tag" href="https://phpunit.de" target="_blank" rel="noopener noreferrer">phpunit</a><a class="tag" href="https://flareapp.io/" target="_blank" rel="noopener noreferrer">flare</a><a class="tag" href="https://stripe.com" target="_blank" rel="noopener noreferrer">stripe</a>
       </div>
       <div class="tags">
-        <a class="tag" href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">mcps</a><a class="tag" href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">claude code</a><a class="tag" href="https://cursor.com" target="_blank" rel="noopener noreferrer">cursor</a><a class="tag" href="https://super.engineering" target="_blank" rel="noopener noreferrer">superconductor</a>
-      </div>
-      <div class="tags">
-        <span class="tag">czech</span><span class="tag">english</span>
+        <a class="tag" href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer">mcps</a><a class="tag" href="https://claude.com/claude-code" target="_blank" rel="noopener noreferrer">claude code</a><a class="tag" href="https://cursor.com" target="_blank" rel="noopener noreferrer">cursor</a><a class="tag" href="https://super.engineering" target="_blank" rel="noopener noreferrer">superconductor</a><a class="tag" href="https://linear.app" target="_blank" rel="noopener noreferrer">linear</a>
       </div>
     </div>
   </section>
@@ -177,12 +204,12 @@
       <p>ai-first monitoring tool for apps and processes.</p>
     </div>
     <div class="project">
-      <h3><a href="https://machacekmartin.github.io/dxf-viewer/" target="_blank" rel="noopener noreferrer">dxf viewer</a></h3>
-      <p>macos app to browse dxf files and their layers, performant ux.</p>
-    </div>
-    <div class="project">
       <h3>ser tam plyn</h3>
       <p>ios app for motorcycle riders. shared rides, stats, leaderboards, nfs-style multiplayer live map.</p>
+    </div>
+    <div class="project">
+      <h3><a href="https://machacekmartin.github.io/dxf-viewer/" target="_blank" rel="noopener noreferrer">dxf viewer</a></h3>
+      <p>macos app to browse dxf files and their layers, performant ux.</p>
     </div>
     <div class="project">
       <h3><a href="https://github.com/machacekmartin/twingo-notifier" target="_blank" rel="noopener noreferrer">twingo notifier</a></h3>
@@ -196,7 +223,7 @@
 
   <section>
     <h2>fun</h2>
-    <p class="mute" style="margin:0; max-width:60ch;">motorcycles, swimming, 3d printing, 3d modeling, kodi plugins and skins, home automations, raspi qol, side quest maxxing.</p>
+    <p class="mute" style="margin:0; max-width:60ch;">motorcycles, swimming, 3d printing, 3d modeling, home and quality of life automations, raspberrypi, sushi, side quest maxxing.</p>
   </section>
 
   <section>
@@ -207,7 +234,15 @@
     </div>
   </section>
 
-  <p class="end"><span><span class="prompt">~</span> <span class="mute">$</span> <span class="blink">_</span></span><button class="print-btn" onclick="window.print()">$ print</button></p>
+  <p class="end"><span><span class="prompt">~</span> <span class="mute">$</span> <span class="blink">_</span></span><span><button class="print-btn" id="theme-btn" onclick="toggleTheme()">$ theme</button> <button class="print-btn" onclick="window.print()">$ print</button></span></p>
 </main>
+<script>
+  function toggleTheme() {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  }
+</script>
 </body>
 </html>
